@@ -18,7 +18,7 @@
 		<module>frankees-pattern-objectmother</module>
 		<module>frankees-pattern-databuilder</module>
 		<module>frankees-generation-databuilder</module>
-		<module>frankees-annotation-processor</module>
-		<module>frankees-annotation-processing</module>
+		<module>frankees-annotation-databuilder</module>
+		<module>frankees-annotation-usecase</module>
 	</modules>
 </project>

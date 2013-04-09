@@ -10,7 +10,7 @@
 		<relativePath>../..</relativePath>
 	</parent>
 
-	<artifactId>frankees-annotation-processor</artifactId>
+	<artifactId>frankees-annotation-databuilder</artifactId>
 
 	<build>
 		<plugins>

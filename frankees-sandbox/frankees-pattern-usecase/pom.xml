@@ -7,17 +7,8 @@
 		<groupId>org.frankees</groupId>
 		<artifactId>frankees-project</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
-		<relativePath>..</relativePath>
+		<relativePath>../..</relativePath>
 	</parent>
 
-	<artifactId>frankees-sandbox</artifactId>
-	<packaging>pom</packaging>
-
-	<modules>
-		<module>frankees-pattern-usecase</module>
-		<module>frankees-pattern-objectmother</module>
-		<module>frankees-pattern-databuilder</module>
-		<module>frankees-annotation-processor</module>
-		<module>frankees-annotation-processing</module>
-	</modules>
+	<artifactId>frankees-pattern-usecase</artifactId>
 </project>

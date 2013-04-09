@@ -3,10 +3,40 @@ package org.frankees.builder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.lang.model.element.Element;
+
 public class BuilderBuilder {
+
+	public static BuilderDescription describe(Element element) {
+		return new BuilderDescriptionElementVisitor().visit(element);
+	}
+
+	public static BuilderDescription describe(
+			Class<? extends Object> objectClass) {
+		BuilderDescription description = new BuilderDescription();
+		description.setObjectClassName(objectClass.getSimpleName());
+		description.setObjectClassName(objectClass.getPackage().getName());
+
+		Map<String, String> properties = new HashMap<String, String>();
+		for (Method method : objectClass.getMethods()) {
+			if (method.getName().startsWith("get")) {
+				String propertyName = method.getName().substring(3, 4)
+						.toLowerCase()
+						+ method.getName().substring(4);
+				properties.put(propertyName, method.getReturnType()
+						.getSimpleName());
+			}
+		}
+		description.setProperties(properties);
+
+		return description;
+	}
 
 	public static String build(BuilderDescription description)
 			throws IOException {

@@ -100,13 +100,6 @@ public class BuildateAnnotationProcessor extends AbstractProcessor {
 				continue;
 			}
 
-			if (element.getSimpleName().toString().startsWith("T")) {
-				messager.printMessage(Kind.WARNING, "Start with a T!", element);
-			} else {
-				messager.printMessage(Kind.WARNING, "Should start with a T!",
-						element);
-			}
-
 			JavaFileObject file = null;
 			try {
 				BuilderDescription builderDescription = new BuilderDescriptionVisitor()

@@ -1,62 +1,49 @@
 package org.frankees.builder;
 
-import java.util.Map;
+import java.util.Set;
 
 public class BuilderDescription {
 
-	private String builderPackageName;
-	private String builderClassName;
-	private String objectPackageName;
-	private String objectClassName;
-	private Map<String, String> properties;
+	private TypeDescription builderTypeDescription;
 
-	public String getBuilderPackageName() {
-		return builderPackageName;
+	private TypeDescription objectTypeDescription;
+
+	private Set<PropertyDescription> properties;
+
+	public BuilderDescription() {
 	}
 
-	public void setBuilderPackageName(String builderPackageName) {
-		this.builderPackageName = builderPackageName;
-	}
-
-	public String getBuilderClassName() {
-		return builderClassName;
-	}
-
-	public void setBuilderClassName(String builderClassName) {
-		this.builderClassName = builderClassName;
-	}
-
-	public String getObjectPackageName() {
-		return objectPackageName;
-	}
-
-	public void setObjectPackageName(String objectPackageName) {
-		this.objectPackageName = objectPackageName;
-	}
-
-	public String getObjectClassName() {
-		return objectClassName;
-	}
-
-	public void setObjectClassName(String objectClassName) {
-		this.objectClassName = objectClassName;
-	}
-
-	public Map<String, String> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(Map<String, String> properties) {
+	public BuilderDescription(TypeDescription builderTypeDescription,
+			TypeDescription objectTypeDescription,
+			Set<PropertyDescription> properties) {
+		super();
+		this.builderTypeDescription = builderTypeDescription;
+		this.objectTypeDescription = objectTypeDescription;
 		this.properties = properties;
 	}
 
-	@Override
-	public String toString() {
-		return "BuilderDescription [builderPackageName=" + builderPackageName
-				+ ", builderClassName=" + builderClassName
-				+ ", objectPackageName=" + objectPackageName
-				+ ", objectClassName=" + objectClassName + ", properties="
-				+ properties + "]";
+	public TypeDescription getBuilderTypeDescription() {
+		return builderTypeDescription;
+	}
+
+	public void setBuilderTypeDescription(TypeDescription builderTypeDescription) {
+		this.builderTypeDescription = builderTypeDescription;
+	}
+
+	public TypeDescription getObjectTypeDescription() {
+		return objectTypeDescription;
+	}
+
+	public void setObjectTypeDescription(TypeDescription objectTypeDescription) {
+		this.objectTypeDescription = objectTypeDescription;
+	}
+
+	public Set<PropertyDescription> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Set<PropertyDescription> properties) {
+		this.properties = properties;
 	}
 
 }

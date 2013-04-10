@@ -17,6 +17,7 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
+import org.frankees.annotation.reflection.BuilderDescriptionElementVisitor;
 import org.frankees.builder.BuilderBuilder;
 import org.frankees.builder.BuilderDescription;
 
@@ -43,28 +44,24 @@ public class BuildateAnnotationProcessor extends AbstractProcessor {
 					continue;
 				}
 
-				JavaFileObject file = null;
+				BuilderDescription builderDescription = new BuilderDescriptionElementVisitor()
+						.visit(element);
+
 				try {
-					BuilderDescription builderDescription = BuilderBuilder
-							.describe(element);
-
-					builderDescription.setBuilderClassName(builderDescription
-							.getObjectClassName() + "Builder");
-					builderDescription.setBuilderPackageName(builderDescription
-							.getObjectPackageName());
-
 					String classContent = BuilderBuilder
 							.build(builderDescription);
 
-					file = filer.createSourceFile(
-							builderDescription.getBuilderPackageName() + "."
-									+ builderDescription.getBuilderClassName(),
-							element);
+					JavaFileObject file = filer.createSourceFile(
+							builderDescription.getBuilderTypeDescription()
+									.toString(), element);
 					file.openWriter().append(classContent).close();
 				} catch (IOException e) {
 					messager.printMessage(
 							Kind.ERROR,
 							"Unable to create builder source class: "
+									+ builderDescription
+											.getBuilderTypeDescription()
+											.toString() + ". Cause: "
 									+ e.getMessage(), element);
 				}
 			}

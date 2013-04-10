@@ -18,13 +18,10 @@ import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.SimpleAnnotationValueVisitor6;
-import javax.lang.model.util.SimpleTypeVisitor6;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
+import org.frankees.annotation.reflection.BuilderDescriptionAnnotationValueVisitor;
 import org.frankees.builder.BuilderBuilder;
 import org.frankees.builder.BuilderDescription;
 
@@ -79,39 +76,23 @@ public class DataBuilderAnnotationProcessor extends AbstractProcessor {
 					continue;
 				}
 
-				JavaFileObject file = null;
+				BuilderDescription builderDescription = new BuilderDescriptionAnnotationValueVisitor()
+						.visit(value);
 				try {
-
-					BuilderDescription builderDescription = new SimpleAnnotationValueVisitor6<BuilderDescription, Void>() {
-						public BuilderDescription visitType(TypeMirror t, Void p) {
-							return new SimpleTypeVisitor6<BuilderDescription, Void>() {
-								@Override
-								public BuilderDescription visitDeclared(
-										DeclaredType t, Void p) {
-									return BuilderBuilder.describe(t
-											.asElement());
-								}
-							}.visit(t);
-						};
-					}.visit(value);
-
-					builderDescription.setBuilderClassName(builderDescription
-							.getObjectClassName() + "Builder");
-					builderDescription.setBuilderPackageName(builderDescription
-							.getObjectPackageName());
-
 					String classContent = BuilderBuilder
 							.build(builderDescription);
 
-					file = filer.createSourceFile(
-							builderDescription.getBuilderPackageName() + "."
-									+ builderDescription.getBuilderClassName(),
-							element);
+					JavaFileObject file = filer.createSourceFile(
+							builderDescription.getBuilderTypeDescription()
+									.toString(), element);
 					file.openWriter().append(classContent).close();
 				} catch (IOException e) {
 					messager.printMessage(
 							Kind.ERROR,
 							"Unable to create builder source class: "
+									+ builderDescription
+											.getBuilderTypeDescription()
+											.toString() + ". Cause: "
 									+ e.getMessage(), element);
 				}
 			}

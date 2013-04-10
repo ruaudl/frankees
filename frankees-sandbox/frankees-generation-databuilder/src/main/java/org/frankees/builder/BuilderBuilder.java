@@ -3,40 +3,9 @@ package org.frankees.builder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.lang.model.element.Element;
 
 public class BuilderBuilder {
-
-	public static BuilderDescription describe(Element element) {
-		return new BuilderDescriptionElementVisitor().visit(element);
-	}
-
-	public static BuilderDescription describe(
-			Class<? extends Object> objectClass) {
-		BuilderDescription description = new BuilderDescription();
-		description.setObjectClassName(objectClass.getSimpleName());
-		description.setObjectClassName(objectClass.getPackage().getName());
-
-		Map<String, String> properties = new HashMap<String, String>();
-		for (Method method : objectClass.getMethods()) {
-			if (method.getName().startsWith("get")) {
-				String propertyName = method.getName().substring(3, 4)
-						.toLowerCase()
-						+ method.getName().substring(4);
-				properties.put(propertyName, method.getReturnType()
-						.getSimpleName());
-			}
-		}
-		description.setProperties(properties);
-
-		return description;
-	}
 
 	public static String build(BuilderDescription description)
 			throws IOException {
@@ -46,22 +15,24 @@ public class BuilderBuilder {
 
 		StringBuilder settersBuilder = new StringBuilder();
 		StringBuilder cloneBuilder = new StringBuilder();
-		for (Entry<String, String> property : description.getProperties()
-				.entrySet()) {
-			String propertyCapitalizedName = capitalizeString(property.getKey());
+		for (PropertyDescription property : description.getProperties()) {
+			String propertyCapitalizedName = capitalizeString(property
+					.getPropertyName());
 			settersBuilder.append(MessageFormat.format(setterTemplate,
-					description.getBuilderClassName(), property.getKey(),
-					propertyCapitalizedName, property.getValue()));
+					description.getBuilderTypeDescription().getClassName(),
+					property.getPropertyName(), propertyCapitalizedName,
+					property.getPropertyType().getClassName()));
 			cloneBuilder.append(MessageFormat.format(cloneTemplate,
 					propertyCapitalizedName));
 		}
 
-		String classPrefix = getClassPrefix(description.getObjectClassName());
-		return MessageFormat.format(classTemplate,
-				description.getBuilderPackageName(),
-				description.getBuilderClassName(),
-				description.getObjectPackageName(),
-				description.getObjectClassName(), classPrefix,
+		String classPrefix = getClassPrefix(description
+				.getObjectTypeDescription().getClassName());
+		return MessageFormat.format(classTemplate, description
+				.getBuilderTypeDescription().getPackageName(), description
+				.getBuilderTypeDescription().getClassName(), description
+				.getObjectTypeDescription().getPackageName(), description
+				.getObjectTypeDescription().getClassName(), classPrefix,
 				settersBuilder.toString(), cloneBuilder.toString());
 	}
 

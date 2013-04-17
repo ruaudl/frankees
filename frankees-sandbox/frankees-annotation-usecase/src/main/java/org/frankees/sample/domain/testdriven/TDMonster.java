@@ -1,6 +1,5 @@
 package org.frankees.sample.domain.testdriven;
 
-
 public class TDMonster {
 
 	private String name;

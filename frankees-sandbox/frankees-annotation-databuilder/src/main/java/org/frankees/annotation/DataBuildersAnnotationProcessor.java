@@ -50,7 +50,7 @@ public class DataBuildersAnnotationProcessor extends
 					}
 				}
 				if (beanPackageNameValue == null) {
-					getEnv().getMessager().printMessage(Kind.ERROR,
+					processingEnv.getMessager().printMessage(Kind.ERROR,
 							"Class to create builder for is not defined",
 							element);
 					continue;
@@ -58,8 +58,8 @@ public class DataBuildersAnnotationProcessor extends
 
 				String beanPackageName = new StringAnnotationValueVisitor()
 						.visit(beanPackageNameValue);
-				PackageElement beanPackageElement = getEnv().getElementUtils()
-						.getPackageElement(beanPackageName);
+				PackageElement beanPackageElement = processingEnv
+						.getElementUtils().getPackageElement(beanPackageName);
 				Set<BuilderDescription> builderDescriptions = new BuilderDescriptionsElementVisitor()
 						.visit(beanPackageElement);
 

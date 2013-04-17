@@ -48,7 +48,7 @@ public class DataBuilderAnnotationProcessor extends
 					}
 				}
 				if (value == null) {
-					getEnv().getMessager().printMessage(Kind.ERROR,
+					processingEnv.getMessager().printMessage(Kind.ERROR,
 							"Class to create builder for is not defined",
 							element);
 					continue;

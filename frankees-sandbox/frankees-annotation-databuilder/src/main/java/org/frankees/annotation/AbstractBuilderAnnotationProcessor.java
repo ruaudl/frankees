@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
@@ -23,32 +22,17 @@ import org.frankees.builder.TypeDescription;
 public abstract class AbstractBuilderAnnotationProcessor extends
 		AbstractProcessor {
 
-	private ProcessingEnvironment env;
-
-	public AbstractBuilderAnnotationProcessor() {
-		super();
-	}
-
-	@Override
-	public void init(ProcessingEnvironment env) {
-		this.env = env;
-	}
-
-	protected ProcessingEnvironment getEnv() {
-		return env;
-	}
-
 	protected void buildBuilder(BuilderDescription builderDescription,
 			Element element) {
 		try {
 			String classContent = BuilderBuilder.build(builderDescription);
 
-			JavaFileObject file = env.getFiler().createSourceFile(
+			JavaFileObject file = processingEnv.getFiler().createSourceFile(
 					builderDescription.getBuilderTypeDescription().toString(),
 					element);
 			file.openWriter().append(classContent).close();
 		} catch (IOException e) {
-			env.getMessager().printMessage(
+			processingEnv.getMessager().printMessage(
 					Kind.ERROR,
 					"Unable to create builder source class: "
 							+ builderDescription.getBuilderTypeDescription()
@@ -96,9 +80,9 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 				.emptyMap();
 
 		for (AnnotationMirror annotationMirror : element.getAnnotationMirrors()) {
-			if (getEnv().getTypeUtils().isSameType(annotation.asType(),
+			if (processingEnv.getTypeUtils().isSameType(annotation.asType(),
 					annotationMirror.getAnnotationType())) {
-				values = getEnv().getElementUtils()
+				values = processingEnv.getElementUtils()
 						.getElementValuesWithDefaults(annotationMirror);
 				continue;
 			}

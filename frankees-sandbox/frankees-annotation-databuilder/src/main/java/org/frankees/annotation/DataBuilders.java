@@ -7,11 +7,11 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.TYPE, ElementType.PACKAGE })
 @Retention(RetentionPolicy.CLASS)
-public @interface DataBuilder {
-
-	Class<? extends Object> value();
+public @interface DataBuilders {
 
 	String builderClassSuffix() default "Builder";
-
+	
 	String builderPackageName() default "";
+
+	String beanPackageName() default "";
 }

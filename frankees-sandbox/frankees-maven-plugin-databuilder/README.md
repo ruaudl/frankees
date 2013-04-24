@@ -1,7 +1,7 @@
 Maven plugin for frankees-generation-databuilder
 ==
 
-This plugin can generate [Frankees databuilder](https://github.com/ruaudl/frankees) for your own classes via maven (it is based on [assertj-assertions-generator](https://github.com/ruaudl/frankees)).
+This plugin can generate [Frankees databuilder](https://github.com/ruaudl/frankees) for your own classes via maven (it is based on [frankees-generation-databuilder](https://github.com/ruaudl/frankees)).
 
 Let's say that you have a `Player` class with `name` and `team` attributes, the plugin is able to create a `PlayerBuilder` databuilder class with `withName` and `withTeam` methods, to write code like :
 

@@ -8,6 +8,7 @@ import org.frankees.builder.BuilderDescription;
 public class BuilderDescriptionAnnotationValueVisitor extends
 		SimpleAnnotationValueVisitor6<BuilderDescription, Void> {
 
+	@Override
 	public BuilderDescription visitType(TypeMirror t, Void p) {
 		return new BuilderDescriptionTypeVisitor().visit(t);
 	}

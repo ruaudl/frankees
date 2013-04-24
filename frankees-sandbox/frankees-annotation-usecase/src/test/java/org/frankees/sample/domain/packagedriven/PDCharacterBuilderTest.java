@@ -2,18 +2,17 @@ package org.frankees.sample.domain.packagedriven;
 
 import static org.fest.assertions.Assertions.*;
 
-import org.frankees.sample.domain.packagedriven.test.PDMonsterAssembler;
+import org.frankees.sample.domain.packagedriven.test.PDCharacterAssembler;
 import org.junit.Test;
 
-public class PDMonsterBuilderTest {
+public class PDCharacterBuilderTest {
 
 	@Test
 	public void testBuilder() {
-		PDMonster dto = PDMonsterAssembler.aPDMonster().withName("Yeti").build();
+		PDCharacter dto = PDCharacterAssembler.aPDCharacter().withName("John").build();
 
 		assertThat(dto).isNotNull();
 		assertThat(dto.getName()).isNotNull();
-		assertThat(dto.getName()).isEqualTo("Yeti");
+		assertThat(dto.getName()).isEqualTo("John");
 	}
-
 }

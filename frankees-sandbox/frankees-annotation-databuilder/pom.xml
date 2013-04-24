@@ -30,14 +30,5 @@
 			<artifactId>frankees-generation-databuilder</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.easytesting</groupId>
-			<artifactId>fest-assert</artifactId>
-		</dependency>
 	</dependencies>
 </project>

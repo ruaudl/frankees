@@ -7,11 +7,26 @@ import java.text.MessageFormat;
 
 public class BuilderBuilder {
 
+	public static final String DEFAULT_BUILDER_CLASS_SUFFIX = "Builder";
+
 	public static String build(BuilderDescription description)
 			throws IOException {
 		String classTemplate = getFileContent("BuilderClassDefinition.txt");
 		String setterTemplate = getFileContent("BuilderPropertySetter.txt");
 		String cloneTemplate = getFileContent("BuilderPropertyClone.txt");
+
+		if (description.getBuilderTypeDescription() == null) {
+			description.setBuilderTypeDescription(new TypeDescription());
+		}
+		if (description.getBuilderTypeDescription().getPackageName() == null) {
+			description.getBuilderTypeDescription().setPackageName(
+					description.getObjectTypeDescription().getPackageName());
+		}
+		if (description.getBuilderTypeDescription().getClassName() == null) {
+			description.getBuilderTypeDescription().setClassName(
+					description.getObjectTypeDescription().getClassName()
+							+ DEFAULT_BUILDER_CLASS_SUFFIX);
+		}
 
 		StringBuilder settersBuilder = new StringBuilder();
 		StringBuilder cloneBuilder = new StringBuilder();

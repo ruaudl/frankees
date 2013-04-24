@@ -20,10 +20,6 @@ public class BuilderDescriptionElementVisitor extends
 		TypeDescription objectTypeDescription = new TypeDescriptionElementVisitor()
 				.visit(e);
 
-		TypeDescription builderTypeDescription = new TypeDescription(
-				objectTypeDescription.getPackageName(),
-				objectTypeDescription.getClassName() + "Builder");
-
 		List<? extends Element> elements = e.getEnclosedElements();
 		Set<PropertyDescription> properties = new HashSet<PropertyDescription>();
 		for (Element element : elements) {
@@ -34,7 +30,6 @@ public class BuilderDescriptionElementVisitor extends
 			}
 		}
 
-		return new BuilderDescription(builderTypeDescription,
-				objectTypeDescription, properties);
+		return new BuilderDescription(null, objectTypeDescription, properties);
 	}
 }

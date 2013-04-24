@@ -6,12 +6,10 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.AnnotationValue;
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.tools.Diagnostic.Kind;
 
-import org.frankees.annotation.reflection.BuilderDescriptionAnnotationValueVisitor;
 import org.frankees.builder.BuilderDescription;
 
 @SupportedAnnotationTypes("org.frankees.annotation.DataBuilder")
@@ -34,20 +32,12 @@ public class DataBuilderAnnotationProcessor extends
 					continue;
 				}
 
-				AnnotationValue value = extractValue("value", annotation,
+				AnnotationMirror mirror = extractMirror(annotation, element);
+				BuilderDescription builderDescription = extractBuilder(mirror,
 						element);
-				if (value == null) {
-					processingEnv.getMessager().printMessage(Kind.ERROR,
-							"Class to create builder for is not defined",
-							element);
-					continue;
+				if (builderDescription != null) {
+					buildBuilder(builderDescription, element);
 				}
-
-				BuilderDescription builderDescription = new BuilderDescriptionAnnotationValueVisitor()
-						.visit(value);
-
-				customizeBuilder(builderDescription, annotation, element);
-				buildBuilder(builderDescription, element);
 			}
 		}
 		return true;

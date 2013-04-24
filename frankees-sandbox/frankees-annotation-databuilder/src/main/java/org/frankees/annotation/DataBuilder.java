@@ -11,7 +11,7 @@ public @interface DataBuilder {
 
 	Class<? extends Object> value();
 
-	String builderClassSuffix() default "Builder";
+	String builderClassSuffix() default "";
 
 	String builderPackageName() default "";
 }

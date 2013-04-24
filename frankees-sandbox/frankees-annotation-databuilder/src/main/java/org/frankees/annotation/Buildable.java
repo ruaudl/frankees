@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface Buildable {
 
-	String builderClassSuffix() default "Builder";
+	String builderClassSuffix() default "";
 
 	String builderPackageName() default "";
 }

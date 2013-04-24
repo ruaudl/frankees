@@ -10,7 +10,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 
-import org.frankees.annotation.reflection.BuilderDescriptionElementVisitor;
 import org.frankees.builder.BuilderDescription;
 
 @SupportedAnnotationTypes("org.frankees.annotation.Buildable")
@@ -28,11 +27,11 @@ public class BuildableAnnotationProcessor extends
 					continue;
 				}
 
-				BuilderDescription builderDescription = new BuilderDescriptionElementVisitor()
-						.visit(element);
-
-				customizeBuilder(builderDescription, annotation, element);
-				buildBuilder(builderDescription, element);
+				BuilderDescription builderDescription = extractBuildable(
+						annotation, element);
+				if (builderDescription != null) {
+					buildBuilder(builderDescription, element);
+				}
 			}
 		}
 		return true;

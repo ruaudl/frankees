@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface DataBuilders {
 
-	String builderClassSuffix() default "Builder";
+	String builderClassSuffix() default "";
 	
 	String builderPackageName() default "";
 

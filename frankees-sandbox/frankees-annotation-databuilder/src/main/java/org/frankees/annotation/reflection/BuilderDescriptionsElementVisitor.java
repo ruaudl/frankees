@@ -11,18 +11,20 @@ import javax.lang.model.util.SimpleElementVisitor6;
 import org.frankees.builder.BuilderDescription;
 
 public class BuilderDescriptionsElementVisitor extends
-		SimpleElementVisitor6<Set<BuilderDescription>, Void> {
+		SimpleElementVisitor6<Set<BuilderDescription>, String> {
 
 	@Override
-	public Set<BuilderDescription> visitPackage(PackageElement e, Void p) {
+	public Set<BuilderDescription> visitPackage(PackageElement e, String n) {
 		List<? extends Element> classes = e.getEnclosedElements();
 		Set<BuilderDescription> descriptions = new HashSet<BuilderDescription>(
 				classes.size());
 		for (Element element : classes) {
-			BuilderDescription description = new BuilderDescriptionElementVisitor()
-					.visit(element);
-			if (description != null) {
-				descriptions.add(description);
+			if (element.getSimpleName().toString().matches(n)) {
+				BuilderDescription description = new BuilderDescriptionElementVisitor()
+						.visit(element);
+				if (description != null) {
+					descriptions.add(description);
+				}
 			}
 		}
 		return descriptions;

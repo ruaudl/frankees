@@ -1,6 +1,5 @@
 package org.frankees.annotation;
 
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.RoundEnvironment;
@@ -9,7 +8,6 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 
@@ -36,17 +34,8 @@ public class DataBuilderAnnotationProcessor extends
 					continue;
 				}
 
-				Map<? extends ExecutableElement, ? extends AnnotationValue> values = extractValues(
-						annotation, element);
-				AnnotationValue value = null;
-				for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : values
-						.entrySet()) {
-					if ("value".equals(entry.getKey().getSimpleName()
-							.toString())) {
-						value = entry.getValue();
-						continue;
-					}
-				}
+				AnnotationValue value = extractValue("value", annotation,
+						element);
 				if (value == null) {
 					processingEnv.getMessager().printMessage(Kind.ERROR,
 							"Class to create builder for is not defined",

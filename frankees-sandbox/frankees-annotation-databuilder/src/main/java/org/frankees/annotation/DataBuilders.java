@@ -13,5 +13,9 @@ public @interface DataBuilders {
 	
 	String builderPackageName() default "";
 
+	String beanClassName() default ".*";
+
 	String beanPackageName() default "";
+	
+	DataBuilder[] value() default {};
 }

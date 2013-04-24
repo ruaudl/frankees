@@ -2,8 +2,8 @@ package org.frankees.annotation;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.lang.model.element.AnnotationMirror;
@@ -14,6 +14,7 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
+import org.frankees.annotation.reflection.ArrayAnnotationValueVisitor;
 import org.frankees.annotation.reflection.StringAnnotationValueVisitor;
 import org.frankees.builder.BuilderBuilder;
 import org.frankees.builder.BuilderDescription;
@@ -48,29 +49,20 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 			builderDescription.setBuilderTypeDescription(new TypeDescription());
 		}
 
-		Map<? extends ExecutableElement, ? extends AnnotationValue> values = extractValues(
+		String builderPackageName = extractStringValue("builderPackageName",
 				annotation, element);
-		for (Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : values
-				.entrySet()) {
-			if ("builderPackageName".equals(entry.getKey().getSimpleName()
-					.toString())) {
-				String builderPackageName = new StringAnnotationValueVisitor()
-						.visit(entry.getValue());
-				if (builderPackageName == null || builderPackageName.isEmpty()) {
-					builderPackageName = builderDescription
-							.getObjectTypeDescription().getPackageName();
-				}
-				builderDescription.getBuilderTypeDescription().setPackageName(
-						builderPackageName);
-			} else if ("builderClassSuffix".equals(entry.getKey()
-					.getSimpleName().toString())) {
-				String builderClassSuffix = new StringAnnotationValueVisitor()
-						.visit(entry.getValue());
-				builderDescription.getBuilderTypeDescription().setClassName(
-						builderDescription.getObjectTypeDescription()
-								.getClassName() + builderClassSuffix);
-			}
+		if (builderPackageName == null || builderPackageName.isEmpty()) {
+			builderPackageName = builderDescription.getObjectTypeDescription()
+					.getPackageName();
 		}
+		builderDescription.getBuilderTypeDescription().setPackageName(
+				builderPackageName);
+
+		String builderClassSuffix = extractStringValue("builderClassSuffix",
+				annotation, element);
+		builderDescription.getBuilderTypeDescription().setClassName(
+				builderDescription.getObjectTypeDescription().getClassName()
+						+ builderClassSuffix);
 	}
 
 	protected Map<? extends ExecutableElement, ? extends AnnotationValue> extractValues(
@@ -84,11 +76,61 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 					annotationMirror.getAnnotationType())) {
 				values = processingEnv.getElementUtils()
 						.getElementValuesWithDefaults(annotationMirror);
-				continue;
+				break;
 			}
 		}
 
 		return values;
+	}
+
+	protected AnnotationValue extractValue(String valueName,
+			Map<? extends ExecutableElement, ? extends AnnotationValue> values) {
+		AnnotationValue value = null;
+		for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : values
+				.entrySet()) {
+			if (entry.getKey().getSimpleName().toString().equals(valueName)) {
+				value = entry.getValue();
+				break;
+			}
+		}
+		return value;
+	}
+
+	protected AnnotationValue extractValue(String valueName,
+			AnnotationMirror annotationMirror) {
+		return extractValue(valueName, processingEnv.getElementUtils()
+				.getElementValuesWithDefaults(annotationMirror));
+	}
+
+	protected AnnotationValue extractValue(String valueName,
+			TypeElement annotation, Element element) {
+		return extractValue(valueName, extractValues(annotation, element));
+	}
+
+	protected String extractStringValue(String valueName,
+			TypeElement annotation, Element element) {
+
+		AnnotationValue value = extractValue(valueName, annotation, element);
+
+		String stringValue = null;
+		if (value != null) {
+			stringValue = new StringAnnotationValueVisitor().visit(value);
+		}
+
+		return stringValue;
+	}
+
+	protected List<? extends AnnotationValue> extractArrayValue(
+			String valueName, TypeElement annotation, Element element) {
+
+		AnnotationValue value = extractValue(valueName, annotation, element);
+
+		List<? extends AnnotationValue> arrayValue = null;
+		if (value != null) {
+			arrayValue = new ArrayAnnotationValueVisitor().visit(value);
+		}
+
+		return arrayValue;
 	}
 
 }

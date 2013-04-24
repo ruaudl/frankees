@@ -1,9 +1,7 @@
-package org.frankees.sample.domain.domaindriven;
+package org.frankees.sample.domain.testsources;
 
-import org.frankees.annotation.Buildable;
 
-@Buildable
-public class DDMonster {
+public class TSMonster {
 
 	private String name;
 

@@ -1,14 +1,14 @@
-package org.frankees.sample.domain.domaindriven;
+package org.frankees.sample.domain.testsources;
 
 import static org.fest.assertions.Assertions.*;
 
 import org.junit.Test;
 
-public class DDMonsterBuilderTest {
+public class TSMonsterBuilderTest {
 
 	@Test
 	public void testBuilder() {
-		DDMonster dto = DDMonsterBuilder.aDDMonster().withName("Yeti").withPower(9).build();
+		TSMonster dto = TSMonsterBuilder.aTSMonster().withName("Yeti").withPower(9).build();
 		
 		assertThat(dto).isNotNull();
 		assertThat(dto.getName()).isNotNull();

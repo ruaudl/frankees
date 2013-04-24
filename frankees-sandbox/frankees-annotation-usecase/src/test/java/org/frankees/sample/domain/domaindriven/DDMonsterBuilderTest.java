@@ -8,12 +8,11 @@ public class DDMonsterBuilderTest {
 
 	@Test
 	public void testBuilder() {
-		DDMonster dto = DDMonsterBuilder.aDDMonster().withName("Yeti").withPower(9).build();
-		
+		DDMonster dto = DDMonsterBuilder.aDDMonster().withName("Yeti").build();
+
 		assertThat(dto).isNotNull();
 		assertThat(dto.getName()).isNotNull();
 		assertThat(dto.getName()).isEqualTo("Yeti");
-                assertThat(dto.getPower()).isEqualTo(9);
 	}
 	
 }

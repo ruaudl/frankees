@@ -10,8 +10,6 @@ public class DDMonster {
 	private Short legsCount;
 
 	private Integer frightLevel;
-        
-        private Integer power;
 
 	public String getName() {
 		return name;
@@ -36,14 +34,4 @@ public class DDMonster {
 	public void setFrightLevel(Integer frightLevel) {
 		this.frightLevel = frightLevel;
 	}
-
-        public Integer getPower() {
-            return power;
-        }
-
-        public void setPower(Integer power) {
-            this.power = power;
-        }
-
-        
 }

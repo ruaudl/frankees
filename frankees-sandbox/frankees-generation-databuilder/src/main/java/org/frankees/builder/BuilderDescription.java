@@ -46,4 +46,10 @@ public class BuilderDescription {
 		this.properties = properties;
 	}
 
+	@Override
+	public String toString() {
+		return "Builder " + builderTypeDescription + " for "
+				+ objectTypeDescription;
+	}
+
 }

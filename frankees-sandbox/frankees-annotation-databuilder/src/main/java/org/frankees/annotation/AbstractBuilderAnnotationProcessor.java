@@ -29,14 +29,14 @@ import org.frankees.builder.TypeDescription;
 
 public abstract class AbstractBuilderAnnotationProcessor extends
 		AbstractProcessor {
-
+	
 	protected void printError(String message, Element element) {
 		processingEnv.getMessager().printMessage(Kind.ERROR, message, element);
 	}
 
 	protected void printWarning(String message, Element element) {
-		processingEnv.getMessager()
-				.printMessage(Kind.MANDATORY_WARNING, message, element);
+		processingEnv.getMessager().printMessage(Kind.MANDATORY_WARNING,
+				message, element);
 	}
 
 	protected void buildBuilder(BuilderDescription description, Element element) {
@@ -142,7 +142,8 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 
 		Set<BuilderDescription> descriptions = Collections.emptySet();
 
-		if (beanPackageName == null || beanPackageName.isEmpty() || beanClassName == null) {
+		if (beanPackageName == null || beanPackageName.isEmpty()
+				|| beanClassName == null) {
 			printWarning(
 					"Bean package or class names missing to create builders",
 					element);
@@ -152,6 +153,11 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 
 			descriptions = new BuilderDescriptionsElementVisitor().visit(
 					beanPackageElement, beanClassName);
+
+			printWarning(String.format("Package element class: %s [%s]",
+					beanPackageElement, beanPackageElement.getClass()), element);
+			printWarning(String.format("Package enclosed elements: %s",
+					beanPackageElement.getEnclosedElements()), element);
 
 			if (descriptions == null || descriptions.isEmpty()) {
 				printWarning(

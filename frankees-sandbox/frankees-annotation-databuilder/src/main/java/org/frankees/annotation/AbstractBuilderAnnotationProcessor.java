@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
@@ -29,7 +30,7 @@ import org.frankees.builder.TypeDescription;
 
 public abstract class AbstractBuilderAnnotationProcessor extends
 		AbstractProcessor {
-	
+
 	protected void printError(String message, Element element) {
 		processingEnv.getMessager().printMessage(Kind.ERROR, message, element);
 	}
@@ -153,16 +154,37 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 
 			descriptions = new BuilderDescriptionsElementVisitor().visit(
 					beanPackageElement, beanClassName);
+		}
 
-			printWarning(String.format("Package element class: %s [%s]",
-					beanPackageElement, beanPackageElement.getClass()), element);
-			printWarning(String.format("Package enclosed elements: %s",
-					beanPackageElement.getEnclosedElements()), element);
+		return descriptions;
+	}
 
-			if (descriptions == null || descriptions.isEmpty()) {
-				printWarning(
-						"Bean classes missing to create builders for package "
-								+ beanPackageName, element);
+	protected Set<BuilderDescription> extractBuilders(String beanPackageName,
+			String beanClassName, RoundEnvironment environment, Element element) {
+
+		Set<BuilderDescription> descriptions = new HashSet<BuilderDescription>();
+
+		if (beanPackageName == null || beanPackageName.isEmpty()
+				|| beanClassName == null) {
+			printWarning(
+					"Bean package or class names missing to create builders",
+					element);
+		} else {
+			PackageElement beanPackageElement = processingEnv.getElementUtils()
+					.getPackageElement(beanPackageName);
+
+			Set<? extends Element> rootElements = environment.getRootElements();
+			for (Element rootElement : rootElements) {
+				if (rootElement.getSimpleName().toString()
+						.matches(beanClassName)
+						&& beanPackageElement.equals(rootElement
+								.getEnclosingElement())) {
+					BuilderDescription description = new BuilderDescriptionElementVisitor()
+							.visit(rootElement);
+					if (description != null) {
+						descriptions.add(description);
+					}
+				}
 			}
 		}
 

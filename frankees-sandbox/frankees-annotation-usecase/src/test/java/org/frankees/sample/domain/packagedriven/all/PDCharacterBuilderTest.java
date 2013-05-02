@@ -1,15 +1,16 @@
-package org.frankees.sample.domain.packagedriven;
+package org.frankees.sample.domain.packagedriven.all;
 
 import static org.fest.assertions.Assertions.*;
 
-import org.frankees.sample.domain.packagedriven.test.PDCharacterAssembler;
+import org.frankees.sample.domain.packagedriven.PDCharacter;
+import org.frankees.sample.domain.packagedriven.all.PDCharacterCreator;
 import org.junit.Test;
 
 public class PDCharacterBuilderTest {
 
 	@Test
 	public void testBuilder() {
-		PDCharacter dto = PDCharacterAssembler.aPDCharacter().withName("John").build();
+		PDCharacter dto = PDCharacterCreator.aPDCharacter().withName("John").build();
 
 		assertThat(dto).isNotNull();
 		assertThat(dto.getName()).isNotNull();

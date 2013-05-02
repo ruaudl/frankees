@@ -3,8 +3,8 @@ package org.frankees.sample.domain.testdriven;
 import static org.fest.assertions.Assertions.*;
 
 import org.frankees.annotation.DataBuilders;
-import org.frankees.sample.domain.testdriven.all.TDMonsterFrankeeBuilder;
 import org.frankees.sample.domain.testdriven.all.TDCharacterFrankeeBuilder;
+import org.frankees.sample.domain.testdriven.all.TDMonsterFrankeeBuilder;
 import org.junit.Test;
 
 @DataBuilders(builderClassSuffix = "FrankeeBuilder", builderPackageName = "org.frankees.sample.domain.testdriven.all", beanClassName = "(?:(?!Test)\\w)+", beanPackageName = "org.frankees.sample.domain.testdriven")

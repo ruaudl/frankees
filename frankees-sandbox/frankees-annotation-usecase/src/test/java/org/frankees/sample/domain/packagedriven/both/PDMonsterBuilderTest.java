@@ -1,8 +1,9 @@
-package org.frankees.sample.domain.packagedriven;
+package org.frankees.sample.domain.packagedriven.both;
 
 import static org.fest.assertions.Assertions.*;
 
-import org.frankees.sample.domain.packagedriven.test.PDMonsterAssembler;
+import org.frankees.sample.domain.packagedriven.PDMonster;
+import org.frankees.sample.domain.packagedriven.both.PDMonsterAssembler;
 import org.junit.Test;
 
 public class PDMonsterBuilderTest {

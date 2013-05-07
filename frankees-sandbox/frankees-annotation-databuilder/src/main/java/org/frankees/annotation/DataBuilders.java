@@ -9,13 +9,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 public @interface DataBuilders {
 
+	Class<? extends Object>[] value() default {};
+
 	String builderClassSuffix() default "";
-	
+
 	String builderPackageName() default "";
 
 	String beanClassName() default ".*";
 
 	String beanPackageName() default "";
-	
-	DataBuilder[] value() default {};
+
+	DataBuilder[] builders() default {};
 }

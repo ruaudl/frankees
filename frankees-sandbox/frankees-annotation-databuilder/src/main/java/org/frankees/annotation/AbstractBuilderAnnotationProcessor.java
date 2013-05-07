@@ -120,7 +120,7 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 		Set<BuilderDescription> descriptions = Collections.emptySet();
 
 		List<? extends AnnotationValue> innerValues = extractArrayValue(
-				"value", mirror);
+				"builders", mirror);
 		if (innerValues != null && !innerValues.isEmpty()) {
 			descriptions = new HashSet<BuilderDescription>();
 			for (AnnotationValue innerValue : innerValues) {
@@ -128,6 +128,27 @@ public abstract class AbstractBuilderAnnotationProcessor extends
 						.visit(innerValue);
 				BuilderDescription description = extractBuilder(innerMirror,
 						element);
+
+				if (description != null) {
+					descriptions.add(description);
+				}
+			}
+		}
+
+		return descriptions;
+	}
+
+	protected Set<BuilderDescription> extractBuildersForClasses(AnnotationMirror mirror,
+			Element element) {
+
+		Set<BuilderDescription> descriptions = Collections.emptySet();
+
+		List<? extends AnnotationValue> innerValues = extractArrayValue(
+				"value", mirror);
+		if (innerValues != null && !innerValues.isEmpty()) {
+			descriptions = new HashSet<BuilderDescription>();
+			for (AnnotationValue innerValue : innerValues) {
+				BuilderDescription description = new BuilderDescriptionAnnotationValueVisitor().visit(innerValue);
 
 				if (description != null) {
 					descriptions.add(description);

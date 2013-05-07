@@ -8,10 +8,10 @@ import org.frankees.sample.domain.testdriven.test.TDMonsterAssembler;
 import org.frankees.sample.domain.testdriven.both.TDCharacterCreator;
 import org.junit.Test;
 
-@DataBuilders(builderClassSuffix = "Assembler", builderPackageName = "org.frankees.sample.domain.testdriven.test", value = {
+@DataBuilders(builderClassSuffix = "Assembler", builderPackageName = "org.frankees.sample.domain.testdriven.test", builders = {
 		@DataBuilder(value = TDCharacter.class, builderClassSuffix = "Creator", builderPackageName = "org.frankees.sample.domain.testdriven.both"),
 		@DataBuilder(value = TDMonster.class) })
-public class TDBothBuilderTest {
+public class TDBothBuildersTest {
 
 	@Test
 	public void testMonsterBuilder() {

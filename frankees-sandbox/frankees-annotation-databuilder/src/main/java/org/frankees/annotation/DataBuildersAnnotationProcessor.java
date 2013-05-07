@@ -39,6 +39,7 @@ public class DataBuildersAnnotationProcessor extends
 
 				AnnotationMirror mirror = extractMirror(annotation, element);
 				builderDescriptions.addAll(extractBuilders(mirror, element));
+				builderDescriptions.addAll(extractBuildersForClasses(mirror, element));
 
 				if (builderDescriptions.isEmpty()) {
 					String beanPackageName = extractStringValue(

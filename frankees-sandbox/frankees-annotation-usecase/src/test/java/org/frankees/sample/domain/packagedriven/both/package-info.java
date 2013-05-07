@@ -1,4 +1,4 @@
-@DataBuilders(builderClassSuffix = "Assembler", builderPackageName = "org.frankees.sample.domain.packagedriven.both", value = {
+@DataBuilders(builderClassSuffix = "Assembler", builderPackageName = "org.frankees.sample.domain.packagedriven.both", builders = {
 		@DataBuilder(PDMonster.class), @DataBuilder(PDCharacter.class) })
 package org.frankees.sample.domain.packagedriven.both;
 

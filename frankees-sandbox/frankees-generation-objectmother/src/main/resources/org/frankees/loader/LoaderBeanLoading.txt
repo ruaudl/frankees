@@ -1,0 +1,9 @@
+	private static {0} {1};
+	public static {0} get{2}() '{'
+		if ({1} == null) '{'
+			{1} = new {0}();
+{3}
+		'}'
+		return {1};
+	'}'
+

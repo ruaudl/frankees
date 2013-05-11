@@ -1,0 +1,14 @@
+[
+    {
+      "id": "dracula",
+      "name": "Dracula",
+      "legsCount": 2,
+      "frightLevel": 10
+    },
+    {
+      "id": "wolfman",
+      "name": "Wolfman",
+      "legsCount": 4,
+      "frightLevel": 8
+    }
+]

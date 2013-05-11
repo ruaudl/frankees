@@ -15,9 +15,10 @@
 
 	<modules>
 		<module>frankees-pattern-usecase</module>
-		<module>frankees-pattern-objectmother</module>
 		<module>frankees-pattern-databuilder</module>
+		<module>frankees-pattern-objectmother</module>
 		<module>frankees-generation-databuilder</module>
+		<module>frankees-generation-objectMother</module>
 		<module>frankees-annotation-databuilder</module>
 		<module>frankees-annotation-usecase</module>
 		<module>frankees-maven-plugin-databuilder</module>

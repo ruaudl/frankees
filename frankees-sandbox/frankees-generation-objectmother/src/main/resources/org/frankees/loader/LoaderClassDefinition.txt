@@ -1,0 +1,12 @@
+package {0};
+
+import {2}.{3};
+
+public final class {1} '{'
+
+	private {1}() '{'
+	'}'
+
+{4}
+
+'}'

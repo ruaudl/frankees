@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monsters>
+
+	<monster id="dracula" name="Dracula" legsCount="2" frightLevel="10" />
+
+	<monster id="wolfman">
+		<name>Wolfman</name>
+		<legsCount>4</legsCount>
+		<frightLevel>8</frightLevel>
+	</monster>
+
+</monsters>
